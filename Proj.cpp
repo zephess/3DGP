@@ -32,101 +32,28 @@ int main() {
 		std::cerr << "Failed to load texture image\n";
 		return 1;
 	}
-	//const GLfloat positions[] = {
-	//
-	//	-0.5f,  0.5f, 0.0f,  
-	//	-0.5f, -0.5f, 0.0f,  
-	//	 0.5f, -0.5f, 0.0f, 
 
-	//	-0.5f,  0.5f, 0.0f,  
-	//	 0.5f, -0.5f, 0.0f, 
-	//	 0.5f,  0.5f, 0.0f   
-	//};
+	GLuint textureId = 0;
+	int texWidth, texHeight, channels;
+	unsigned char* image = stbi_load("myGrid.png", &texWidth, &texHeight, &channels, STBI_rgb_alpha);
+	if (!image) {
+		std::cerr << "Failed to load image\n";
+	}
+	glGenTextures(1, &textureId);
+	glActiveTexture(GL_TEXTURE0 + 1);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(image);
 
-	///*const GLfloat colors[] = {
-	//	1.0f,0.0f,0.0f,1.0f,
-	//	0.0f,1.0f,0.0f,1.0f,
-	//	0.0f,0.0f,1.0f,1.0f
-	//};*/
-
-	//const GLfloat texCoords[] = {
-	//0.0f, 1.0f,  
-	//0.0f, 0.0f, 
-	//1.0f, 0.0f,  
-
-	//0.0f, 1.0f,  
-	//1.0f, 0.0f,  
-	//1.0f, 1.0f   
-	//};
-
-	//Mesh* mesh = new Mesh(positions, sizeof(positions), texCoords, sizeof(texCoords),6);
-
-
-	//GLuint textureId = 0;
-	//glGenTextures(1, &textureId);
-	//if (!textureId) {
-	//	throw std::exception();
-	//}
+	glGenTextures(1, &textureId);
+	if (!textureId) {
+		throw std::exception();
+	}
 
 	//glBindTexture(GL_TEXTURE_2D, textureId);
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-	////free(data);
-	//glGenerateMipmap(GL_TEXTURE_2D);
-	//glBindTexture(GL_TEXTURE_2D, 0);
-
-	///*GLuint colorsVboId = 0;
-
-	//glGenBuffers(1, &colorsVboId);
-
-	//if (!colorsVboId) {
-	//	throw std::exception();
-	//}
-
-	//glBindBuffer(GL_ARRAY_BUFFER, colorsVboId);*/
-
-	////glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
 
 
-
-
-	//GLuint positionsVboId = 0;
-
-	//glGenBuffers(1, &positionsVboId);
-	//if (!positionsVboId) {
-	//	throw std::exception();
-	//}
-	//glBindBuffer(GL_ARRAY_BUFFER, positionsVboId);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-
-	//GLuint texCoordVboId = 0;
-	//glGenBuffers(1, &texCoordVboId);
-	//glBindBuffer(GL_ARRAY_BUFFER, texCoordVboId);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
-
-	//GLuint vaoId = 0;
-	//glGenVertexArrays(1, &vaoId);
-
-	//if (!vaoId) {
-	//	throw std::exception();
-	//}
-	//glBindVertexArray(vaoId);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, positionsVboId);
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
-	//glEnableVertexAttribArray(0);
-
-	///*glBindBuffer(GL_ARRAY_BUFFER, colorsVboId);
-	//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (void*)0);
-	//glEnableVertexAttribArray(1);*/
-
-	//glBindBuffer(GL_ARRAY_BUFFER, texCoordVboId);
-	//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (void*)0);
-	//glEnableVertexAttribArray(2);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//glBindVertexArray(0);
 
 	Shader shader("vertexShader.glsl", "fragmentShader.glsl");
 	shader.use();
@@ -134,7 +61,8 @@ int main() {
 
 
 	//glActiveTexture(GL_TEXTURE0 + 1);
-	//glBindTexture(GL_TEXTURE_2D, textureId);
+	/*glBindTexture(GL_TEXTURE_2D, textureId);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);*/
 	
 	float angle = 0.0f;
 	glEnable(GL_CULL_FACE);
@@ -160,9 +88,9 @@ int main() {
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-		//glBindVertexArray(mdl.vao_id());
+		glBindVertexArray(mdl.vao_id());
 		
-		//mesh->bind();
+		
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
 		
 		glm::mat4 model(1.0f);
@@ -173,10 +101,10 @@ int main() {
 		shader.setMat4("uModel", model);
 		shader.setMat4("uProjection", projection);
 		
-		//glDrawArrays(GL_TRIANGLES, 0, mdl.vertex_count());
-		//mesh->draw();
+		glDrawArrays(GL_TRIANGLES, 0, mdl.vertex_count());
+		
 		glBindVertexArray(mdl2.vao_id());
-		//mesh->bind();
+	
 
 		glm::mat4 model2(1.0f);
 		model2 = glm::translate(model2, glm::vec3(20, -10, -50.0f));
@@ -184,14 +112,10 @@ int main() {
 
 		angle += 1.0f;
 		shader.setMat4("uModel", model2);
-		//mesh->draw();
+		
 	
 		glDrawArrays(GL_TRIANGLES, 0, mdl2.vertex_count());
-		//mesh->unbind();
-		
-		
-		//glDrawArrays(GL_TRIANGLES, 0, mdl2.vertex_count());
-		//glBindVertexArray(0);
+	
 		glUseProgram(0);
 		
 
