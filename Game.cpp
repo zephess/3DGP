@@ -20,6 +20,10 @@ Game::Game(Window* window, Shader shader) : window(window), shader(shader), mdl(
 }
 
 void Game::Update() {
+
+	if (obj->GetAABB().Intersects(obj2->GetAABB())) {
+		std::cout << "Collision detected!" << std::endl;
+	}
 	Uint32 currentTime = SDL_GetTicks();
 	float deltaTime = (currentTime - lastTime) / 1000.0f;
 	lastTime = currentTime;
@@ -45,14 +49,14 @@ void Game::Update() {
 	else {
 		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
 	}
-
+	
 	//angle += 1.0f;
 	//ypos -= 0.05f;
 	shader.setMat4("uModel", model);
 	obj->Draw(0);
 	glBindVertexArray(obj->getModel()->vao_id());
 	glDrawArrays(GL_TRIANGLES, 0, obj->getModel()->vertex_count());
-
+	
 
 	glm::mat4 model2(1.0f);
 	model2 = glm::translate(model2, glm::vec3(-20, 0, -50.0f));

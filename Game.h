@@ -26,5 +26,6 @@ private:
 public:
 	Game(Window* window, Shader shader);
 	void Update();
+	
 };
 

@@ -4,13 +4,9 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <stdexcept>
-#include "Model.h"
 #include "Window.h"
-#include "GameObject.h"
 #include "Shader.h"
-#include "Mesh.h"
 #include "Game.h"
-#include "Player.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 

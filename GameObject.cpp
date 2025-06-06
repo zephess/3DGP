@@ -62,3 +62,12 @@ void GameObject::Update() {
 Model* GameObject::getModel() {
 	return model;
 }
+
+glm::vec3 GameObject::getPosition() {
+	return position;
+}
+
+void GameObject::setPosition(glm::vec3 pos) {
+	position = pos;
+}
+
