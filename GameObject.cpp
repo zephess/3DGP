@@ -56,7 +56,7 @@ void GameObject::Draw(int textureUnit) {
 }
 
 void GameObject::Update() {
-
+	std::cout << this->GetAABB().x;
 }
 
 Model* GameObject::getModel() {

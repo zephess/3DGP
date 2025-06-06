@@ -23,7 +23,13 @@ void Player::Update(float deltaTime) {
 	yPos += yVel * deltaTime;
 	xPos += xVel * deltaTime;
 	if (xPos <= xMin || xPos >= xMax) {
+		
 		xVel *= -1;
+		if (xVel < 50 && xVel > -50) {
+			xVel *= 1.1;
+			std::cout << xVel;
+		}
+		
 	}
 	if (yPos <= yMin) {
 		yPos = yMax - 2;
@@ -31,6 +37,8 @@ void Player::Update(float deltaTime) {
 	if (yPos >= yMax) {
 		yPos = yMin + 2;
 	}
+	setPosition(glm::vec3(xPos, yPos, -50.0f));
+	//std::cout << xPos << " " << yPos << std::endl;
 }
 
 float Player::GetYPos() {

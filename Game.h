@@ -18,13 +18,18 @@ private:
 	
 	Model mdl;
 	Model mdl2;
+	Model mdl3;
 	Window* window;
 	Player* obj;
 	GameObject* obj2;
+	GameObject* obj3;
 	Shader shader;
 	float lastTime;
+	Mesh* fullscreenQuad;
+	Shader fullscreenShader;
 public:
-	Game(Window* window, Shader shader);
+	Game(Window* window, Shader shader, Shader shader2);
+	~Game();
 	void Update();
 	
 };

@@ -12,7 +12,7 @@
 struct AABB {
 	float x, y, width, height;
 	bool Intersects(AABB other) {
-		return (x + width < other.x ||
+		return !(x + width < other.x ||
 			x > other.x + other.width ||
 			y + height < other.y ||
 			y > other.y + other.height);
@@ -30,8 +30,8 @@ private:
 	GLuint textureId;
 	float yPos;
 	float yVel;
-	float width = 50.0f;
-	float height =50.0f;
+	float width = 5.0f;
+	float height =5.0f;
 
 public:
 	GameObject();

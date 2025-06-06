@@ -19,8 +19,9 @@ int main() {
 		throw std::runtime_error("Failed to initialise GLEW");
 	}
 	Shader shader("vertexShader.glsl", "fragmentShader.glsl");
+	Shader fullScreen("fullscreenVert.glsl", "fullscreenFrag.glsl");
 	
-	Game* game = new Game(window, shader);
+	Game* game = new Game(window, shader, fullScreen);
 	bool quit = false;
 	while (!quit) {
 		SDL_Event ev = { 0 };

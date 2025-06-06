@@ -16,6 +16,9 @@ public:
 	GLuint getProgramId();
 	void setMat4(std::string name, glm::mat4 matrix);
 	void setInt(std::string name, int value);
+	void setFloat(std::string name, float value);
+	void setVec2(std::string name, glm::vec2 value);
+
 
 
 };
